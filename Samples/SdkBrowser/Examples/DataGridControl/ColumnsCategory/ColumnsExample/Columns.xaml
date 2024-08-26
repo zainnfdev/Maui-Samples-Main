@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                        xmlns:local="clr-namespace:SDKBrowserMaui.Examples.DataGridControl.ColumnsCategory"
+                        x:Class="SDKBrowserMaui.Examples.DataGridControl.ColumnsCategory.ColumnsExample.Columns"
+                        Margin="5">
+    <telerik:RadContentView.Resources>
+        <!-- >> datagrid-columns-converter -->
+        <telerik:BoolToValueConverter x:Key="BoolToValueConverter" FalseValue="No" TrueValue="Yes" />
+        <!-- << datagrid-columns-converter -->
+    </telerik:RadContentView.Resources>
+    <telerik:RadContentView.Content>
+        <Grid>
+            <!-- >> datagrid-columns-example -->
+            <telerik:RadDataGrid x:Name="grid" 
+                                 ItemsSource="{Binding Clubs}" 
+                                 AutoGenerateColumns="False">
+                <telerik:RadDataGrid.BindingContext>
+                    <local:ViewModel />
+                </telerik:RadDataGrid.BindingContext>
+                <telerik:RadDataGrid.Columns>
+                    <telerik:DataGridTextColumn PropertyName="Name" 
+                                                HeaderText="Name">
+                        <telerik:DataGridTextColumn.CellContentStyle>
+                            <telerik:DataGridTextCellStyle TextColor="#018383" 
+                                                           FontSize="15" 
+                                                           SelectedTextColor="#A55200"/>   
+                        </telerik:DataGridTextColumn.CellContentStyle>
+                    </telerik:DataGridTextColumn>
+                    <telerik:DataGridNumericalColumn DataMemberBinding="{Binding StadiumCapacity, StringFormat='{0:N0}'}" 
+                                                     HeaderText="Stadium Capacity"/>
+                    <telerik:DataGridBooleanColumn DataMemberBinding="{Binding IsChampion, Converter={StaticResource BoolToValueConverter}}" 
+                                                   HeaderText="Champion"/>
+                    <telerik:DataGridDateColumn PropertyName="Established" 
+                                                HeaderText="Date Established"/>
+                    <telerik:DataGridComboBoxColumn PropertyName="Championship"
+                                                    HeaderText="Championship"
+                                                    ItemsSourcePath="Championships"/> 
+                    <telerik:DataGridTemplateColumn HeaderText="Location">
+                        <telerik:DataGridTemplateColumn.CellContentTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <VerticalStackLayout InputTransparent="True">                                        
+                                            <Label Text="{Binding Country}"
+                                                   TextColor="#009688"
+                                                   Margin="0, 5, 0, 5"
+                                                   HorizontalOptions="Center"
+                                                   VerticalTextAlignment="Center"/>                                       
+                                        <Label Text="{Binding City}"
+                                               TextColor="#80CBC4"
+                                               HorizontalOptions="Center"
+                                               VerticalTextAlignment="Center"
+                                               FontSize="12"/>  
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </telerik:DataGridTemplateColumn.CellContentTemplate>
+                    </telerik:DataGridTemplateColumn>
+                    <telerik:DataGridNumericalColumn DataMemberBinding="{Binding Path=Revenue, StringFormat='{0:C}', TargetNullValue='N/A'}"
+                                                     HeaderText="Revenue (in millions)"/>
+                </telerik:RadDataGrid.Columns>
+            </telerik:RadDataGrid>
+            <!-- << datagrid-columns-example -->
+        </Grid>
+    </telerik:RadContentView.Content>
+</telerik:RadContentView>

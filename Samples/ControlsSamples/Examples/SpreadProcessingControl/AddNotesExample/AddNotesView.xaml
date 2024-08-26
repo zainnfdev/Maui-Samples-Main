@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                        x:Class="QSF.Examples.SpreadProcessingControl.AddNotesExample.AddNotesView"
+                        Padding="{OnIdiom Default='16, 20', Phone=0}">
+    <telerik:RadContentView.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" BasedOn="{StaticResource BaseLabelStyle}">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0, 0, 12" />
+            </Style>
+            <Style TargetType="telerik:RadEntry">
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="ReserveSpaceForErrorView" Value="False" />
+                <Setter Property="Margin" Value="0, 0, 0, 24" />
+            </Style>
+        </ResourceDictionary>
+    </telerik:RadContentView.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+        <VerticalStackLayout BackgroundColor="{AppThemeBinding Light={StaticResource DefaultBackgroundColor}, Dark={StaticResource DefaultBackgroundColorDark}}"
+                             Padding="16, 24">
+            <Label Text="Note Preview:" />
+            <telerik:RadBorder HeightRequest="90"
+                               BackgroundColor="#FAFFEA"
+                               BorderColor="#D7E3B2"
+                               BorderThickness="1"
+                               Padding="8"
+                               HorizontalOptions="Center">
+                <Label Text="{Binding Text, Mode=TwoWay}"
+                       TextColor="Black"
+                       VerticalOptions="Start"
+                       Margin="0" />
+            </telerik:RadBorder>
+        </VerticalStackLayout>
+        <ScrollView Grid.Row="1"
+                    Margin="{OnIdiom Default='0, 24, 0, 0', Desktop='0, 40, 0, 0'}"
+                    Padding="{OnIdiom Default=0, Phone=16}">
+            <Grid RowDefinitions="{OnIdiom Default='Auto, *', Desktop='Auto, Auto'}">
+                <VerticalStackLayout HorizontalOptions="{OnIdiom Default=Fill, Desktop=Center}">
+                    <Label Text="Note Settings"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           Margin="0, 0, 0, 24" />
+                    <Label Text="Related Property:" />
+                    <telerik:RadSegmentedControl ItemsSource="{Binding Items, Mode=TwoWay}"
+                                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                                 WidthRequest="{OnPlatform WinUI=300, MacCatalyst=300}"
+                                                 MinimumHeightRequest="{Binding Source={x:Reference authorEntry}, Path=Height}"
+                                                 Margin="0, 0, 0, 24" />
+                    <Label Text="Author Name:" />
+                    <telerik:RadEntry x:Name="authorEntry"
+                                      Text="{Binding Author, Mode=TwoWay}"
+                                      WidthRequest="{OnPlatform WinUI=300, MacCatalyst=300}" />
+                    <Label Text="Description Text:" />
+                    <telerik:RadEntry Text="{Binding Description, Mode=TwoWay}"
+                                      WidthRequest="{OnPlatform WinUI=300, MacCatalyst=300}" />
+                </VerticalStackLayout>
+                <telerik:RadButton Grid.Row="1"
+                                   Text="Add Note"
+                                   Margin="{OnIdiom Default='0, 16, 0, 0', Phone=16}"
+                                   Command="{Binding ViewDocumentWithNotesCommand}"
+                                   VerticalOptions="{OnPlatform Default=End, WinUI=Center, MacCatalyst=Center}"
+                                   HorizontalOptions="{OnPlatform Default=Fill, WinUI=Center, MacCatalyst=Center}"
+                                   Style="{StaticResource SubmitButtonStyle}" />
+            </Grid>
+        </ScrollView>
+    </Grid>
+</telerik:RadContentView>

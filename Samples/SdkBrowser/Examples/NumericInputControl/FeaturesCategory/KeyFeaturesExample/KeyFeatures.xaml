@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                        x:Class="SDKBrowserMaui.Examples.NumericInputControl.FeaturesCategory.KeyFeaturesExample.KeyFeatures"
+                        Margin="5">
+    <ScrollView>
+        <VerticalStackLayout WidthRequest="300">
+            <Label Text="NumericInput with defined Value" />
+            <!-- >> numericinput-features-value -->
+            <telerik:RadNumericInput Value="12" AutomationId="numericDefinedValue"/>
+            <!-- << numericinput-features-value -->
+            <Label Text="NumericInput with Minimum=0 and Maximum=10" />
+            <!-- >> numericinput-features-minmax -->
+            <telerik:RadNumericInput Minimum="0" Maximum="10" AutomationId="numericMinAndMax"/>
+            <!-- << numericinput-features-minmax -->
+            <Label Text="NumericInput with Step=10"/>
+            <!-- >> numericinput-features-step -->
+            <telerik:RadNumericInput Step="10" AutomationId="numericSteps"/>
+            <!-- << numericinput-features-step -->
+            <Label Text="NumericInput with Buttons Text applied" />
+            <!-- >> numericinput-features-btntext -->
+            <telerik:RadNumericInput IncreaseButtonText=" &gt;"
+                                     DecreaseButtonText=" &lt;"
+                                     AutomationId="numericButtonsText"/>
+            <!-- << numericinput-features-btntext -->
+            <Label Text="NumericInput in read-only mode" />
+            <!-- >> numericinput-features-readonly -->
+            <telerik:RadNumericInput IsReadOnly="True" AutomationId="numericReadOnly"/>
+            <!-- << numericinput-features-readonly -->
+            <Label Text="NumericInput with StringFormat" />
+            <!-- >> numericinput-features-stringformat -->
+            <telerik:RadNumericInput StringFormat="{}{0:P2}" AutomationId="numericStringFormat"/>
+            <!-- << numericinput-features-stringformat -->
+            <Label Text="NumericInput with BackgroundColor" />
+            <!-- >> numericinput-features-background -->
+            <telerik:RadNumericInput BackgroundColor="LightYellow" AutomationId="numericBackgroudColor"/>
+            <!-- << numericinput-features-background -->
+        </VerticalStackLayout>
+    </ScrollView>
+</telerik:RadContentView>

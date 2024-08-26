@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(MauiAppPlatforms)</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>SDKBrowserMaui</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ApplicationTitle>Telerik SDKBrowser Maui</ApplicationTitle>
+		<ApplicationId>com.telerik.SDKBrowserMaui</ApplicationId>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<!-- TODO: Remove it when Maui fixes Skia linker issue for net7. -->
+		<AndroidLinkResources Condition=" $(IsNet7) == 'true' ">false</AndroidLinkResources>
+
+		<!-- TODO: Remove this when moving to machines where Xcode 14.3 -->
+		<MtouchLink>SdkOnly</MtouchLink>
+
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(TargetFramework.Contains('maccatalyst'))">
+		<DefineConstants>$(DefineConstants);__MACCATALYST__</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<MauiImage Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" IsAppIcon="true" Color="#512BD4" />
+		<MauiSplashScreen Include="Resources\Images\logosplashscreen.svg" Color="#512BD4" />
+		<MauiImage Include="Resources\Images\*" />
+		<MauiFont Include="Resources\Fonts\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="config.xml" />
+		<EmbeddedResource Include="Examples\ImageEditorControl\imageavatar.png" />
+		<EmbeddedResource Include="Examples\MapControl\world.dbf" />
+		<EmbeddedResource Include="Examples\MapControl\world.shp" />
+		<EmbeddedResource Include="Examples\PdfViewerControl\pdf-processing.pdf" />
+		<EmbeddedResource Include="Examples\PdfViewerControl\pdf-overview.pdf" />
+		<EmbeddedResource Include="Examples\RichTextEditorControl\*" />
+		<EmbeddedResource Include="Resources\Images\Emojis\*" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(SolutionName)' != 'Telerik.Maui' And '$(UseSourceProjects)' != 'True' And '$(UseSourceAssemblies)' != 'True'">
+		<PackageReference Include="Telerik.UI.for.Maui" Version="$(TelerikVersion)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('net8'))">
+		<PackageReference Include="Microsoft.Maui.Controls" Condition=" $(CustomMauiVersion) == '' " Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Condition=" $(CustomMauiVersion) == '' " Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Condition=" $(CustomMauiVersion) != '' " Version="$(CustomMauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Condition=" $(CustomMauiVersion) != '' " Version="$(CustomMauiVersion)" />
+	</ItemGroup>
+
+	<Import Condition="'$(SolutionName)' == 'Telerik.Maui' Or '$(UseSourceProjects)' == 'True'" Project="..\AddSourceProjects.proj" />
+	<Import Condition="'$(SolutionName)' != 'Telerik.Maui' And '$(UseSourceProjects)' != 'True' And '$(UseSourceAssemblies)' == 'True'" Project="..\AddSourceAssemblies.proj" />
+	<Import Condition="'$(UsePlatformAssemblies)' == 'True'" Project="..\..\Source\AddPlatformAssemblies.proj" />
+	
+</Project>

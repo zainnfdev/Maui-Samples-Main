@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<views:PickerExampleViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                             xmlns:views="clr-namespace:QSF.Views"
+                             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                             x:Class="QSF.Examples.TimePickerControl.FirstLookExample.FirstLookView"
+                             ItemsSource="{Binding Cards}"
+                             CollectionTitle="Request Cleaning Service"
+                             ButtonCommand="{Binding SendOrderCommand}"
+                             ButtonText="Make an Order">
+    <VerticalStackLayout x:Name="layout">
+        <Label Text="Desired Date:"
+               Margin="0, 0, 0, 12" />
+        <telerik:RadDatePicker x:Name="datePicker"
+                               Date="{Binding SelectedDate}"
+                               DefaultHighlightedDate="{Static sys:DateTime.Now}"
+                               Margin="0, 0, 0, 40">
+            <telerik:RadDatePicker.PopupSettings>
+                <telerik:PickerPopupSettings HeaderLabelText="Select Date" />
+            </telerik:RadDatePicker.PopupSettings>
+        </telerik:RadDatePicker>
+        <Label Text="Desired Time:"
+               Margin="0, 0, 0, 12" />
+        <telerik:RadTimePicker x:Name="timePicker"
+                               Time="{Binding SelectedTime}"
+                               DefaultHighlightedTime="{Binding CurrentTime}">
+            <telerik:RadTimePicker.PopupSettings>
+                <telerik:PickerPopupSettings HeaderLabelText="Select Time" />
+            </telerik:RadTimePicker.PopupSettings>
+        </telerik:RadTimePicker>
+    </VerticalStackLayout>
+</views:PickerExampleViewBase>

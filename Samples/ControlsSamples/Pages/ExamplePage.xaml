@@ -1,0 +1,50 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="QSF.Pages.ExamplePage">
+    <VisualElement.Resources>
+        <Style x:Key="ExamplePageImageButtonStyle" TargetType="ImageButton">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="24" />
+            <Setter Property="WidthRequest" Value="24" />
+            <Setter Property="Margin" Value="8,0,0,0" />
+        </Style>
+    </VisualElement.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid ColumnDefinitions="Auto, Auto, *"
+              Style="{StaticResource HeaderStyle}">
+            <ImageButton Clicked="Back_Clicked"
+                         Style="{OnPlatform Default={StaticResource DefaultBackButtonStyle}, iOS={StaticResource IOSBackButtonStyle}}" />
+            <Label Grid.Column="1"
+                   Style="{StaticResource HeaderLabelStyle}"
+                   Text="{Binding HeaderTitle}" />
+            <HorizontalStackLayout Grid.Column="2"
+                                   HorizontalOptions="End"
+                                   Spacing="16">
+                <ImageButton Command="{Binding NavigateToConfigurationPage}"
+                             CommandParameter="{Binding Example}"
+                             Source="settings.png"
+                             IsVisible="{Binding Example.IsConfigurable}"
+                             Style="{StaticResource ExamplePageImageButtonStyle}"/>
+                <ImageButton Command="{Binding NavigateToDescriptionCommand}"
+                             CommandParameter="{Binding Example}"
+                             Source="info_mobile_white.png"
+                             IsVisible="{Binding Example.Description, Converter={StaticResource NullOrEmptyToBoolConverter}}"
+                             Style="{StaticResource ExamplePageImageButtonStyle}"/>
+                <ImageButton Command="{Binding NavigateToExampleCodeCommand}"
+                             CommandParameter="{Binding Example}"
+                             Source="viewcode_white.png"
+                             Style="{StaticResource ExamplePageImageButtonStyle}"/>
+            </HorizontalStackLayout>
+        </Grid>
+        <ContentView Content="{Binding Converter={StaticResource ModelToViewConverter}}" Grid.Row="1" />
+    </Grid>
+</ContentPage>

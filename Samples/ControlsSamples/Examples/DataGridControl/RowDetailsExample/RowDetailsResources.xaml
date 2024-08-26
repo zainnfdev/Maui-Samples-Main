@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:QSF.Examples.DataGridControl.RowDetailsExample"
+                    xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                    x:Class="QSF.Examples.DataGridControl.RowDetailsExample.RowDetailsResources">
+    <Style TargetType="Label" BasedOn="{StaticResource BaseLabelStyle}" />
+    <Style x:Key="InfoLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource DefaultTextColor}, Dark={StaticResource DefaultTextColorDark}}" />
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Margin" Value="0, 0, 0, 8" />
+    </Style>
+    <DataTemplate x:Key="DataGridRowDetailsTemplate">
+        <Grid BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+            <telerik:RadTabView HeightRequest="400"
+                                IsContentSwipeEnabled="False"
+                                SelectedIndex="{Binding UIState.SelectedTabIndex, Mode=TwoWay}"
+                                Margin="12"
+                                BorderThickness="{OnPlatform Default=1, MacCatalyst=0, WinUI=0}"
+                                BorderColor="{AppThemeBinding Light={StaticResource DefaultBorderColor}, Dark={StaticResource DefaultBorderColorDark}}">
+                <telerik:TabViewItem HeaderText="Orders Info">
+                    <telerik:RadDataGrid x:Name="dataGrid"
+                                         ItemsSource="{Binding Orders}"
+                                         AutoGenerateColumns="False"
+                                         Margin="12">
+                        <telerik:RadDataGrid.Columns>
+                            <telerik:DataGridNumericalColumn PropertyName="OrderID" 
+                                                             HeaderText="Order ID" />
+                            <telerik:DataGridDateColumn PropertyName="OrderDate"
+                                                        HeaderText="Order Date" />
+                            <telerik:DataGridDateColumn PropertyName="RequiredDate"
+                                                        HeaderText="Est. Date" />
+                            <telerik:DataGridDateColumn PropertyName="ShippedDate"
+                                                        HeaderText="Shipped Date" />
+                            <telerik:DataGridTextColumn PropertyName="ShipName"
+                                                        HeaderText="Ship Name" />
+                        </telerik:RadDataGrid.Columns>
+                    </telerik:RadDataGrid>
+                </telerik:TabViewItem>
+                <telerik:TabViewItem HeaderText="Assignee Info">
+                    <telerik:RadBorder CornerRadius="8"
+                                       BorderThickness="1"
+                                       BorderColor="{AppThemeBinding Light={OnPlatform Default={StaticResource DefaultBorderColor}, WinUI={StaticResource DefaultBorderColorWinUI}},
+                                                                     Dark={OnPlatform Default={StaticResource DefaultBorderColorDark}, WinUI={StaticResource DefaultBorderColorDarkWinUI}}}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Margin="12"
+                                       Padding="24">
+                        <Grid RowDefinitions="Auto, Auto"
+                              ColumnSpacing="24">
+                            <HorizontalStackLayout Spacing="24"
+                                                   Margin="0, 0, 0, 24">
+                                <Image Source="{Binding Image}"
+                                       WidthRequest="80"
+                                       HeightRequest="80"
+                                       Aspect="AspectFit" />
+                                <VerticalStackLayout Spacing="12"
+                                                     VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="18" />
+                                    <Label Text="{Binding Email}" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                            <StackLayout Grid.Row="1"
+                                         Spacing="12"
+                                         Orientation="{OnIdiom Default=Horizontal, Phone=Vertical}">
+                                <HorizontalStackLayout Spacing="12">
+                                    <Label Text="Phone:"
+                                           Style="{StaticResource InfoLabelStyle}" />
+                                    <Label Text="{Binding Phone}" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="12">
+                                    <Label Text="Location:"
+                                           Style="{StaticResource InfoLabelStyle}" />
+                                    <Label Text="{Binding Country}" />
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </telerik:RadBorder>
+                </telerik:TabViewItem>
+                <telerik:TabViewItem HeaderText="Shipments Stats">
+                    <Grid RowDefinitions="Auto, *"
+                          Margin="12"
+                          RowSpacing="12">
+                        <Label Text="Container freight rate index"
+                               HorizontalTextAlignment="Center" />
+                        <telerik:RadCartesianChart Grid.Row="1">
+                            <telerik:RadCartesianChart.HorizontalAxis>
+                                <telerik:DateTimeContinuousAxis LabelFormat="d MMM"
+                                                                MajorStep="1"
+                                                                MajorStepUnit="Month" />
+                            </telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:RadCartesianChart.VerticalAxis>
+                                <telerik:NumericalAxis />
+                            </telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:RadCartesianChart.Series>
+                                <telerik:LineSeries ItemsSource="{Binding Orders}"
+                                                    CategoryBinding="ShippedDate"
+                                                    ValueBinding="Freight" />
+                            </telerik:RadCartesianChart.Series>
+                            <telerik:RadCartesianChart.ChartBehaviors>
+                                <telerik:ChartTrackBallBehavior ShowTrackInfo="True" />
+                            </telerik:RadCartesianChart.ChartBehaviors>
+                        </telerik:RadCartesianChart>
+                    </Grid>
+                </telerik:TabViewItem>
+            </telerik:RadTabView>
+            <BoxView BackgroundColor="{AppThemeBinding Light={OnPlatform Default={StaticResource DefaultBorderColor}, WinUI={StaticResource DefaultBorderColorWinUI}},
+                                                       Dark={OnPlatform Default={StaticResource DefaultBorderColorDark}, WinUI={StaticResource DefaultBorderColorDarkWinUI}}}"
+                     HeightRequest="1"
+                     VerticalOptions="Start" />
+            <BoxView BackgroundColor="{AppThemeBinding Light={OnPlatform Default={StaticResource DefaultBorderColor}, WinUI={StaticResource DefaultBorderColorWinUI}},
+                                                       Dark={OnPlatform Default={StaticResource DefaultBorderColorDark}, WinUI={StaticResource DefaultBorderColorDarkWinUI}}}"
+                     WidthRequest="1"
+                     HorizontalOptions="Start"
+                     IsVisible="{OnPlatform Default=true, WinUI=false}" />
+            <BoxView BackgroundColor="{AppThemeBinding Light={OnPlatform Default={StaticResource DefaultBorderColor}, WinUI={StaticResource DefaultBorderColorWinUI}},
+                                                       Dark={OnPlatform Default={StaticResource DefaultBorderColorDark}, WinUI={StaticResource DefaultBorderColorDarkWinUI}}}"
+                     WidthRequest="1"
+                     HorizontalOptions="End"
+                     IsVisible="{OnPlatform Default=true, WinUI=false}" />
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:local="clr-namespace:SDKBrowserMaui.Examples.SchedulerControl.StylingCategory.SpecialSlotsStylingExample"
+             x:Class="SDKBrowserMaui.Examples.SchedulerControl.StylingCategory.SpecialSlotsStylingExample.SpecialSlotsStyling">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!-- >> scheduler-specialslots-style -->
+            <local:CustomSpecialSlotStyleSelector x:Key="CustomSpecialSlotStyleSelector">
+                <local:CustomSpecialSlotStyleSelector.NonWorkingStyle>
+                    <Style TargetType="telerik:SchedulerBoxView">
+                        <Setter Property="BackgroundColor" Value="#99F2EFF9" />
+                    </Style>
+                </local:CustomSpecialSlotStyleSelector.NonWorkingStyle>
+                <local:CustomSpecialSlotStyleSelector.WeekendStyle>
+                    <Style TargetType="telerik:SchedulerBoxView">
+                        <Setter Property="BackgroundColor" Value="#99F9F2EF" />
+                    </Style>
+                </local:CustomSpecialSlotStyleSelector.WeekendStyle>
+            </local:CustomSpecialSlotStyleSelector>
+            <!-- << scheduler-specialslots-style -->
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <Grid>
+        <!-- >> scheduler-specialslotsstyling-definition -->
+        <telerik:RadScheduler x:Name="scheduler" ActiveViewDefinitionIndex="1">
+            <telerik:RadScheduler.ViewDefinitions>
+                <telerik:DayViewDefinition SpecialSlotsSource="{Binding NonWorkingHours}"
+                                           SpecialSlotStyleSelector="{StaticResource CustomSpecialSlotStyleSelector}" />
+                <telerik:WeekViewDefinition SpecialSlotsSource="{Binding NonWorkingHours}"
+                                            SpecialSlotStyleSelector="{StaticResource CustomSpecialSlotStyleSelector}" />
+            </telerik:RadScheduler.ViewDefinitions>
+        </telerik:RadScheduler>
+        <!-- << scheduler-specialslotsstyling-definition -->
+    </Grid>
+</ContentView>

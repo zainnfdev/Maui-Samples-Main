@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                        xmlns:local="clr-namespace:SDKBrowserMaui.Examples.ChatControl.FeaturesCategory.ItemTemplateSelectorExample"
+                        x:Class="SDKBrowserMaui.Examples.ChatControl.FeaturesCategory.ItemTemplateSelectorExample.ItemTemplateSelector">
+    <telerik:RadContentView.Resources>
+        <!-- >> chat-features-itemtemplate-resources -->
+        <ResourceDictionary>
+            <local:SimpleChatItemConverter x:Key="SimpleChatItemConverter" />
+
+            <DataTemplate x:Key="ImportantMessageTemplate">
+                <Grid Margin="0, 2, 0, 10">
+                    <Image Source="{Binding Author.Avatar}"
+                           WidthRequest="{OnPlatform Default=24, WinUI=32}"
+                           HeightRequest="{OnPlatform Default=24, WinUI=32}"
+                           Margin="{OnPlatform Default=0, WinUI='10, 0, 0, 0', MacCatalyst='12, 0, 0, 0'}"
+                           HorizontalOptions="Start" />
+                    <telerik:RadBorder CornerRadius="0, 4, 4, 4"
+                                       Padding="8, 4"
+                                       Margin="{OnPlatform Default='28, 0, 0, 0', MacCatalyst='39, 0, 0, 0', WinUI='46, 0, 0, 0'}"
+                                       HorizontalOptions="Start"
+                                       BackgroundColor="#FFDDB1">
+                        <Label Text="{Binding Text, StringFormat='&#x26a0; {0}'}"
+                               FontAttributes="Italic" />
+                    </telerik:RadBorder>
+                </Grid>
+            </DataTemplate>
+
+            <local:CustomChatItemTemplateSelector x:Key="CustomChatItemTemplateSelector"
+                                                  ImportantMessageTemplate="{StaticResource ImportantMessageTemplate}" />
+        </ResourceDictionary>
+        <!-- << chat-features-itemtemplate-resources -->
+    </telerik:RadContentView.Resources>
+    <!-- >> chat-features-itemtemplate-xaml -->
+    <telerik:RadChat x:Name="chat"
+                     Author="{Binding Me}"
+                     ItemsSource="{Binding Items}" 
+                     ItemConverter="{StaticResource SimpleChatItemConverter}"
+                     ItemTemplateSelector="{StaticResource CustomChatItemTemplateSelector}">
+        <telerik:RadChat.BindingContext>
+            <local:ViewModel />
+        </telerik:RadChat.BindingContext>
+    </telerik:RadChat>
+    <!-- << chat-features-itemtemplate-xaml -->
+</telerik:RadContentView>

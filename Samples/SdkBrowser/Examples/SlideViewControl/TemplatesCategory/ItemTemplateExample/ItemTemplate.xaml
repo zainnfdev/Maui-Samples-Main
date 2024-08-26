@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<telerik:RadContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                        x:Class="SDKBrowserMaui.Examples.SlideViewControl.TemplatesCategory.ItemTemplateExample.ItemTemplate">
+    <Grid>
+        <!-- >> slideview-item-template-xaml -->
+        <telerik:RadSlideView x:Name="slideView"
+                              ItemsSource="{Binding Items}">
+            <telerik:RadSlideView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowDefinitions="Auto, *"
+                          VerticalOptions="Center">
+                        <Label Text="{Binding IconUnicode}"
+                               TextColor="#3341A1"
+                               FontFamily="TelerikFontExamples"
+                               FontSize="64"
+                               HorizontalOptions="Center" />
+                        <Label Grid.Row="1"
+                               Text="{Binding DescriptionText}"
+                               HorizontalTextAlignment="Center"
+                               Margin="0, 10, 0, 0" />
+                    </Grid>
+                </DataTemplate>
+            </telerik:RadSlideView.ItemTemplate>
+        </telerik:RadSlideView>
+        <!-- << slideview-item-template-xaml -->
+    </Grid>
+</telerik:RadContentView>

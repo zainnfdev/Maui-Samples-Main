@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="SDKBrowserMaui.Examples.SchedulerControl.SpecialSlotsCategory.SpecialSlotTemplateExample.SpecialSlotTemplate">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!-- >> scheduler-customslots-resources -->
+            <DataTemplate x:Key="RestHoursTemplate">
+                <Grid IsClippedToBounds="True"
+                      ColumnDefinitions="Auto, *"
+                      ColumnSpacing="4"
+                      BackgroundColor="#12B35900"
+                      Padding="4">
+                    <Label Text="&#xe834;"
+                           TextColor="#B35900"
+                           FontFamily="TelerikFontExamples"
+                           VerticalTextAlignment="Center" />
+                    <Label Grid.Column="1"
+                           Text="Coffee break"
+                           TextColor="#B35900"
+                           TextTransform="Uppercase"
+                           VerticalTextAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+            <!-- << scheduler-customslots-resources -->
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Grid>
+        <!-- >> scheduler-special-slots-template -->
+        <telerik:RadScheduler x:Name="scheduler">
+            <telerik:RadScheduler.ViewDefinitions>
+                <telerik:DayViewDefinition SpecialSlotsSource="{Binding RestHours}"
+                                           SpecialSlotTemplate="{StaticResource RestHoursTemplate}" />
+                <telerik:MultidayViewDefinition VisibleDays="3" 
+                                                Title="3 Day" 
+                                                SpecialSlotsSource="{Binding RestHours}"
+                                                SpecialSlotTemplate="{StaticResource RestHoursTemplate}" />
+            </telerik:RadScheduler.ViewDefinitions>
+        </telerik:RadScheduler>
+        <!-- << scheduler-special-slots-template -->
+    </Grid>
+</ContentView>

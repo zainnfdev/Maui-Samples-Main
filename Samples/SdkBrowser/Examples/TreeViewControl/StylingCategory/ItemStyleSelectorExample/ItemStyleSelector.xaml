@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:local="clr-namespace:SDKBrowserMaui.Examples.TreeViewControl.ScrollingCategory"
+             xmlns:selector="clr-namespace:SDKBrowserMaui.Examples.TreeViewControl.StylingCategory"
+             x:Class="SDKBrowserMaui.Examples.TreeViewControl.StylingCategory.ItemStyleSelectorExample.ItemStyleSelector">
+
+    <ContentView.Resources>
+        <!-- >> treeview-style-selector -->
+        <ResourceDictionary>
+            <Style x:Key="ItemStyle" TargetType="telerik:TreeViewItemView">
+                <Setter Property="IsImageVisible" Value="True" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#268660C5" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="#61000000" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#408660C5" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="CityItemStyle" TargetType="telerik:TreeViewItemView" BasedOn="{StaticResource ItemStyle}">
+                <Setter Property="ImageSource">
+                    <FontImageSource Glyph="&#xe83d;"
+                                     FontFamily="TelerikFontExamples"
+                                     Color="{Binding TextColor, Source={x:RelativeSource AncestorType={x:Type telerik:TreeViewItemView}}}"
+                                     Size="16" />
+                </Setter>
+            </Style>
+            <Style x:Key="CountryItemStyle" TargetType="telerik:TreeViewItemView" BasedOn="{StaticResource ItemStyle}">
+                <Setter Property="ImageSource">
+                    <FontImageSource Glyph="&#xe81c;"
+                                     FontFamily="TelerikFontExamples"
+                                     Color="{Binding TextColor, Source={x:RelativeSource AncestorType={x:Type telerik:TreeViewItemView}}}"
+                                     Size="16" />
+                </Setter>
+            </Style>
+            <selector:LocationsStyleSelector x:Key="LocationsStyleSelector"
+                                             CityStyle="{StaticResource CityItemStyle}"
+                                             CountryStyle="{StaticResource CountryItemStyle}" />
+        </ResourceDictionary>
+        <!-- << treeview-style-selector -->
+    </ContentView.Resources>
+    <!-- >> treeview-item-styleselector -->
+    <telerik:RadTreeView x:Name="treeView"
+                         ItemsSource="{Binding Countries}"
+                         ItemStyleSelector="{StaticResource LocationsStyleSelector}"
+                         SelectedItem="{Binding SelectedLocation}">
+        <telerik:TreeViewDescriptor TargetType="{x:Type local:Country}"
+                                    DisplayMemberPath="Name"
+                                    ItemsSourcePath="Cities" />
+        <telerik:TreeViewDescriptor TargetType="{x:Type local:City}"
+                                    DisplayMemberPath="Name" />
+        <telerik:RadTreeView.BindingContext>
+            <local:LocationViewModel/>
+        </telerik:RadTreeView.BindingContext>
+    </telerik:RadTreeView>
+    <!-- << treeview-item-styleselector -->
+</ContentView>

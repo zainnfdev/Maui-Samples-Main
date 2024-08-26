@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="QSF.Examples.DataGridControl.SelectionExample.SelectionView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="DestinationColumnTemplate">
+                <VerticalStackLayout VerticalOptions="Center"
+                                     Padding="{OnPlatform Default='10, 0, 0, 0', Android='5, 0, 0, 0'}">
+                    <Label Text="{Binding DestinationFullName}" />
+                    <Label Text="{Binding DestinationShortName}"
+                           FontSize="Caption"
+                           TextColor="{StaticResource AccentColor8}" />
+                </VerticalStackLayout>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <telerik:RadDataGrid UserFilterMode="Disabled"
+                         ItemsSource="{Binding Flights}"
+                         SelectionMode="{Binding SelectedMode}"
+                         SelectionUnit="{Binding SelectedUnit}"
+                         UserEditMode="None"
+                         UserGroupMode="Disabled"
+                         AutoGenerateColumns="False"
+                         CanUserReorderColumns="False">
+        <telerik:RadDataGrid.Columns>
+            <telerik:DataGridDateColumn HeaderText="Date"
+                                        PropertyName="DateTime" />
+            <telerik:DataGridTimeColumn HeaderText="Time" 
+                                        PropertyName="DateTime" />
+            <telerik:DataGridTextColumn HeaderText="Flight"
+                                        PropertyName="Id" />
+            <telerik:DataGridTemplateColumn HeaderText="To"
+                                            CellContentTemplate="{StaticResource DestinationColumnTemplate}"
+                                            SizeMode="Fixed"
+                                            Width="100"
+                                            MinimumWidth="100" />
+            <telerik:DataGridBooleanColumn HeaderText="Direct"
+                                           PropertyName="IsDirect" />
+            <telerik:DataGridTextColumn HeaderText="Airline"
+                                        PropertyName="AirlineName" />
+                <telerik:DataGridTextColumn HeaderText="Status"
+                                            PropertyName="Status" />
+            </telerik:RadDataGrid.Columns>
+    </telerik:RadDataGrid>
+</ContentView>

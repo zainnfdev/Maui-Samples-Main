@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="QSF.Views.PickerExampleViewBase"
+             ControlTemplate="{StaticResource DefaultControlTemplate}">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="CardItemStyle" TargetType="telerik:NonVirtualizedItemsControlItemContainer">
+                <Setter Property="BackgroundColor" Value="{Binding BackgroundColor}" />
+                <Setter Property="BorderColor" Value="{Binding BorderColor}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="Padding" Value="24, 16" />
+                <Setter Property="Margin" Value="8, 0" />
+            </Style>
+            <Style x:Key="SelectedCardItemStyle" TargetType="telerik:NonVirtualizedItemsControlItemContainer" BasedOn="{StaticResource CardItemStyle}">
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BorderColor" Value="{Binding SelectedBorderColor}" />
+            </Style>
+            <DataTemplate x:Key="DefaultItemTemplate">
+                <VerticalStackLayout Spacing="4">
+                    <Image Source="{Binding ImageSource}"
+                           WidthRequest="56"
+                           HeightRequest="56"
+                           Aspect="AspectFit" />
+                    <Label Text="{Binding Label}"
+                           IsVisible="{Binding Label, Converter={StaticResource NullOrEmptyToBoolConverter}}"
+                           TextColor="{Binding SelectedBorderColor}"
+                           MaximumWidthRequest="65"
+                           LineBreakMode="WordWrap"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold"
+                           FontSize="12" />
+                </VerticalStackLayout>
+            </DataTemplate>
+            <ControlTemplate x:Key="DefaultControlTemplate">
+                <Grid RowDefinitions="Auto, Auto, *"
+                      RowSpacing="{OnIdiom Default=24, Desktop=40}"
+                      Padding="8, 24">
+                    <Label Text="{TemplateBinding CollectionTitle}"
+                           FontSize="24"
+                           Margin="8, 0" />
+                    <telerik:NonVirtualizedItemsControl x:Name="PART_CardsItemsControl"
+                                                        Grid.Row="1"
+                                                        Orientation="Horizontal"
+                                                        ItemsSource="{TemplateBinding ItemsSource}"
+                                                        ItemTemplate="{TemplateBinding ItemTemplate}"
+                                                        ItemStyle="{StaticResource CardItemStyle}"
+                                                        SelectedItemStyle="{StaticResource SelectedCardItemStyle}"
+                                                        SelectionMode="Single"
+                                                        CanUnselectSingleItem="False" />
+                    <VerticalStackLayout Grid.Row="2"
+                                         Padding="8, 0">
+                        <ContentView Content="{TemplateBinding Content}"
+                                     WidthRequest="{OnPlatform MacCatalyst=300, WinUI=300}"
+                                     HorizontalOptions="{OnPlatform Default=Fill, MacCatalyst=Start, WinUI=Start}" />
+                        <telerik:RadButton Margin="0, 40, 0, 0"
+                                           VerticalOptions="Start"
+                                           HorizontalOptions="Start"
+                                           Style="{StaticResource SubmitButtonStyle}"
+                                           Command="{TemplateBinding ButtonCommand}"
+                                           Text="{TemplateBinding ButtonText}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+</ContentView>

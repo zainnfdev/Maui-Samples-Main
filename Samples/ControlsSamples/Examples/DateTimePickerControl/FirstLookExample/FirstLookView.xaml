@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:PickerExampleViewBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+                             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                             xmlns:views="clr-namespace:QSF.Views"
+                             xmlns:local="clr-namespace:QSF.Examples.DatePickerControl.FirstLookExample"
+                             x:Class="QSF.Examples.DateTimePickerControl.FirstLookExample.FirstLookView"
+                             ItemsSource="{Binding Cards}"
+                             CollectionTitle="Book Your Transfer"
+                             ButtonCommand="{Binding SendRequestCommand}"
+                             ButtonText="Request Transfer">
+    <VerticalStackLayout x:Name="layout">
+        <Label Text="Date &amp; Time of Arrival"
+               Margin="0, 0, 0, 12" />
+        <telerik:RadDateTimePicker x:Name="dateTimePicker"
+                                   Date="{Binding Date}"
+                                   DefaultHighlightedDate="{Static sys:DateTime.Now}">
+            <telerik:RadDateTimePicker.PopupSettings>
+                <telerik:PickerPopupSettings HeaderLabelText="Select Date &amp; Time" />
+            </telerik:RadDateTimePicker.PopupSettings>
+        </telerik:RadDateTimePicker>
+    </VerticalStackLayout>
+</views:PickerExampleViewBase>

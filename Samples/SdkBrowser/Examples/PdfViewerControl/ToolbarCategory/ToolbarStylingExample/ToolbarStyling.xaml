@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="SDKBrowserMaui.Examples.PdfViewerControl.ToolbarCategory.ToolbarStylingExample.ToolbarStyling">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <!-- >> pdfviewer-toolbar-styling-resources -->
+            <Color x:Key="ToolbarItemTextColor">White</Color>
+            <Color x:Key="ToolbarItemInvertedTextColor">Black</Color>
+            <Color x:Key="ToolbarItemPointerOverColor">#FABB5C</Color>
+            <Color x:Key="ToolbarAccentColor">#F9AA34</Color>
+            <Color x:Key="ToolbarDisabledColor">#61FFFFFF</Color>
+
+            <Style x:Key="CommonToolbarItemViewStyle" TargetType="telerik:ButtonToolbarItemView">
+                <Setter Property="TextColor" Value="{StaticResource ToolbarItemTextColor}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal" />
+                            <VisualState Name="PointerOver">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource ToolbarItemPointerOverColor}" />
+                                    <Setter Property="TextColor" Value="{StaticResource ToolbarItemInvertedTextColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="{StaticResource ToolbarDisabledColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style x:Key="ZoomToolbarItemViewStyle" TargetType="telerik:ButtonToolbarItemView" BasedOn="{StaticResource CommonToolbarItemViewStyle}">
+                <Setter Property="TextColor" Value="{StaticResource ToolbarAccentColor}" />
+            </Style>
+            <Style x:Key="PdfViewerToolbarStyle" TargetType="telerik:RadPdfViewerToolbar">
+                <Setter Property="BackgroundColor" Value="#344955" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <!-- << pdfviewer-toolbar-styling-resources -->
+        </ResourceDictionary>
+    </ContentView.Resources>
+    
+    <!-- >> pdfviewer-toolbar-styling-xaml -->
+    <Grid RowDefinitions="{OnIdiom Desktop='Auto, *', Phone='*, Auto'}">
+        <telerik:RadPdfViewerToolbar Grid.Row="{OnIdiom Desktop=0, Phone=1}"
+                                     PdfViewer="{Binding Source={x:Reference pdfViewer}}"
+                                     Style="{StaticResource PdfViewerToolbarStyle}">
+            <telerik:PdfViewerFitToWidthToolbarItem Style="{StaticResource CommonToolbarItemViewStyle}"/>
+            <telerik:PdfViewerZoomInToolbarItem Style="{StaticResource ZoomToolbarItemViewStyle}"/>
+            <telerik:PdfViewerZoomOutToolbarItem Style="{StaticResource ZoomToolbarItemViewStyle}"/>
+            <telerik:PdfViewerNavigateToPreviousPageToolbarItem Style="{StaticResource CommonToolbarItemViewStyle}"/>
+            <telerik:PdfViewerNavigateToNextPageToolbarItem Style="{StaticResource CommonToolbarItemViewStyle}"/>
+        </telerik:RadPdfViewerToolbar>
+        <telerik:RadPdfViewer x:Name="pdfViewer"
+                              Grid.Row="{OnIdiom Desktop=1, Phone=0}" />
+    </Grid>
+    <!-- << pdfviewer-toolbar-styling-xaml -->
+</ContentView>

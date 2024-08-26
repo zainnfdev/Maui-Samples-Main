@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:styles="clr-namespace:QSF.Styles"
+             xmlns:local="clr-namespace:QSF.Examples.DataGridControl.FirstLookExample"
+             x:Class="QSF.Examples.DataGridControl.SelectionExample.ConfigurationArea">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <styles:ConfigurationViewResources />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <VerticalStackLayout Style="{StaticResource RootAtSeparateAreaStyle}">
+       <VerticalStackLayout Style="{StaticResource GroupAtSeparateAreaStyle}">
+           <Label Text="Selection Unit:"
+                  Style="{StaticResource VerticalGroupLabelStyle}" />
+           <telerik:RadComboBox ItemsSource="{Binding SelectionUnits}"
+                                DropDownHeight="{OnPlatform Android=68, iOS=72, MacCatalyst=44, WinUI=80}"
+                                SelectedItem="{Binding SelectedUnit, Mode=TwoWay}" />
+       </VerticalStackLayout>
+       <VerticalStackLayout Style="{StaticResource GroupAtSeparateAreaStyle}">
+           <Label Text="Selection Mode:"
+                  Style="{StaticResource VerticalGroupLabelStyle}" />
+           <telerik:RadComboBox ItemsSource="{Binding SelectionModes}"
+                                DropDownHeight="{OnPlatform Android=102, iOS=108, MacCatalyst=66, WinUI=120}"
+                                SelectedItem="{Binding SelectedMode, Mode=TwoWay}" />
+       </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

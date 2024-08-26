@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:local="clr-namespace:QSF.Examples.AutoCompleteControl.FirstLookExample"
+             x:Class="QSF.Examples.AutoCompleteControl.FirstLookExample.FirstLookView"
+             Padding="{OnIdiom Desktop='16, 20', Phone='16'}">
+
+    <Grid.Resources>
+        <Style x:Key="DetailsLayoutStyle" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="{OnIdiom Desktop=Vertical, Default=Horizontal}" />
+            <Setter Property="Spacing" Value="{OnIdiom Desktop=12, Default=0}" />
+        </Style>
+
+        <Style x:Key="DetailsLabelStyle" TargetType="Label" BasedOn="{StaticResource BaseLabelStyle}">
+            <Setter Property="HorizontalTextAlignment" Value="Start" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="WidthRequest" Value="60" />
+        </Style>
+
+        <Style x:Key="AutoCompleteStyle" TargetType="telerik:RadAutoComplete">
+            <Setter Property="DisplayMode" Value="Tokens" />
+            <Setter Property="HorizontalOptions" Value="{OnIdiom Phone=FillAndExpand, Default=FillAndExpand}" />
+            <Setter Property="Placeholder" Value="Enter Recipient" />
+            <Setter Property="Margin" Value="{OnIdiom Phone='20, 0, 0, 0', Default=0}" />
+        </Style>
+    </Grid.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto"
+          RowSpacing="{OnIdiom Desktop='40', Phone='30'}">
+        <Grid ColumnDefinitions="*, *"
+              RowDefinitions="{OnIdiom Default='*, *', Desktop='*, Auto'}"
+              ColumnSpacing="{OnIdiom Desktop='20', Phone='0'}"
+              RowSpacing="{OnIdiom Desktop=0, Phone='30'}">
+            <StackLayout Grid.ColumnSpan="{OnIdiom Default=2, Desktop=1}"
+                         Style="{StaticResource DetailsLayoutStyle}" >
+                <Label Text="To:"
+                       Style="{StaticResource DetailsLabelStyle}" />
+                <telerik:RadAutoComplete x:Name="autoComplete"
+                                         Style="{StaticResource AutoCompleteStyle}"
+                                         ItemsSource="{Binding People}" />
+            </StackLayout>
+            <StackLayout Grid.Row="{OnIdiom Default=1, Desktop=0}"
+                         Grid.Column="{OnIdiom Default=0, Desktop=1}"
+                         Grid.ColumnSpan="{OnIdiom Default=2, Desktop=1}"
+                         Style="{StaticResource DetailsLayoutStyle}">
+                <Label Text="Cc/Bcc:"
+                       Style="{StaticResource DetailsLabelStyle}" />
+                <telerik:RadAutoComplete x:Name="autoComplete2"
+                                         Style="{StaticResource AutoCompleteStyle}"
+                                         ItemsSource="{Binding People}" />
+            </StackLayout>
+        </Grid>
+
+        <StackLayout Grid.Row="1"
+                     Style="{StaticResource DetailsLayoutStyle}">
+            <Label Text="Subject:"
+                   Style="{StaticResource DetailsLabelStyle}" />
+            <telerik:RadEntry Text="Telerik UI for .NET MAUI"
+                              HorizontalOptions="FillAndExpand"
+                              Margin="{OnIdiom Phone='20, 0, 0, 0', Default=0}"
+                              ReserveSpaceForErrorView="False" />
+        </StackLayout>
+
+        <Label Grid.Row="2"
+               Text="{Binding Description}"
+               Style="{StaticResource BaseLabelStyle}" />
+
+        <telerik:RadButton Grid.Row="3"
+                           Text="Send"
+                           Command="{Binding SendCommand}"
+                           Style="{StaticResource SubmitButtonStyle}"
+                           VerticalOptions="{OnIdiom Default=Center, Phone=End}"
+                           HorizontalOptions="{OnIdiom Default=Start, Phone=Fill}" />
+    </Grid>
+</Grid>

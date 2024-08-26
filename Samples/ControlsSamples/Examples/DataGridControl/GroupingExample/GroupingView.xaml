@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:columnTypesExample="clr-namespace:QSF.Examples.DataGridControl.ColumnTypesExample"
+             x:Class="QSF.Examples.DataGridControl.GroupingExample.GroupingView"
+             Margin="{OnIdiom Phone='16,20', Desktop=0}">
+
+    <ContentView.Resources>
+        <telerik:DataGridBorderStyle x:Key="TextCellDecorationsStyle"
+                                     BackgroundColor="#1A7C59B6" />
+        <columnTypesExample:StatusFlightToBooleanConverter x:Key="StatusFlightToBooleanConverter" />
+        <telerik:BoolToValueConverter x:Key="BoolToUserGroupModeConverter">
+            <telerik:BoolToValueConverter.TrueValue>
+                <telerik:DataGridUserGroupMode>Enabled</telerik:DataGridUserGroupMode>
+            </telerik:BoolToValueConverter.TrueValue>
+            <telerik:BoolToValueConverter.FalseValue>
+                <telerik:DataGridUserGroupMode>Disabled</telerik:DataGridUserGroupMode>
+            </telerik:BoolToValueConverter.FalseValue>
+        </telerik:BoolToValueConverter>
+        <DataTemplate x:Key="StatusCellTemplate">
+            <HorizontalStackLayout IsClippedToBounds="True"
+                                   VerticalOptions="Center"
+                                   Margin="4, 0">
+                <Label Text="{Binding Status}"
+                       Margin="2, 0" />
+                <Label Text="{Binding StatusTime}"
+                       IsVisible="{Binding Status, Converter={StaticResource StatusFlightToBooleanConverter}}"
+                       TextColor="{StaticResource AccentColor8}"
+                       Margin="2, 0" />
+            </HorizontalStackLayout>
+        </DataTemplate>
+    </ContentView.Resources>
+
+    <telerik:RadDataGrid AutoGenerateColumns="False"
+                         ItemsSource="{Binding Flights}"
+                         GroupDescriptors="{Binding GroupDescriptors, Mode=OneWayToSource}"
+                         UserGroupMode="{Binding IsGroupingAllowed, Converter={StaticResource BoolToUserGroupModeConverter}}"
+                         UserFilterMode="Disabled"
+                         UserEditMode="None"
+                         UserSortMode="None"
+                         SelectionMode="None">
+        <telerik:RadDataGrid.Columns>
+            <telerik:DataGridDateColumn HeaderText="Date"
+                                        PropertyName="Date" />
+            <telerik:DataGridTimeColumn HeaderText="Time"
+                                        PropertyName="Date" />
+            <telerik:DataGridTextColumn HeaderText="Flight"
+                                        PropertyName="Id" />
+            <telerik:DataGridTextColumn HeaderText="To"
+                                        PropertyName="DestinationFullName" />
+            <telerik:DataGridBooleanColumn HeaderText="Direct"
+                                           PropertyName="IsDirect" />
+            <telerik:DataGridTextColumn HeaderText="Airline"
+                                        PropertyName="AirlineName" />
+            <telerik:DataGridTextColumn HeaderText="Status"
+                                        PropertyName="Status"
+                                        CellDecorationStyle="{StaticResource TextCellDecorationsStyle}"
+                                        CellContentTemplate="{StaticResource StatusCellTemplate}" />
+        </telerik:RadDataGrid.Columns>
+    </telerik:RadDataGrid>
+
+</ContentView>

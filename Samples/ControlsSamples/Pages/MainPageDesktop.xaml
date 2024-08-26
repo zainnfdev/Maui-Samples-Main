@@ -1,0 +1,148 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             xmlns:converters="clr-namespace:QSF.Converters"
+             xmlns:pages="clr-namespace:QSF.Pages"
+             xmlns:views="clr-namespace:QSF.Views"
+             xmlns:viewModels="clr-namespace:QSF.ViewModels"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False"
+             x:Class="QSF.Pages.MainPageDesktop">
+    <ContentPage.BindingContext>
+        <viewModels:HomeViewModel />
+    </ContentPage.BindingContext>
+    <VisualElement.Resources>
+        <converters:StringToFontImageSourceConverter x:Key="StringToFontImageSourceConverter"
+                                                     FontFamily="TelerikControlsIcons"
+                                                     Color="{StaticResource AccentColor8}"
+                                                     Size="24" />
+        <FontImageSource x:Key="HomeIcon"
+                         Glyph="&#xe03a;"
+                         FontFamily="TelerikControlsIcons"
+                         Color="{StaticResource AccentColor8}"
+                         Size="24" />
+        <FontImageSource x:Key="SearchIcon"
+                         Glyph="&#xe03b;"
+                         FontFamily="TelerikControlsIcons"
+                         Color="{StaticResource AccentColor8}"
+                         Size="24" />
+        <FontImageSource x:Key="SettingsIcon"
+                         Glyph="&#xe03c;"
+                         FontFamily="TelerikControlsIcons"
+                         Color="{StaticResource AccentColor8}"
+                         Size="24" />
+        <DataTemplate x:Key="ControlItemTemplate">
+            <Grid ColumnDefinitions="*, Auto"
+                  Margin="{OnPlatform MacCatalyst='0, 0, 9, 0', WinUI='0, 0, 8, 0'}">
+                <Label Text="{Binding DisplayName}"
+                       TextColor="{Binding TextColor, Source={RelativeSource AncestorType={x:Type telerik:NavigationViewItemView}}}"
+                       VerticalOptions="Center" />
+                <ContentView Grid.Column="1"
+                             Content="{Binding Status, Converter={StaticResource StatusTagToTemplateConverter}}"
+                             VerticalOptions="Center"
+                             Margin="{OnPlatform MacCatalyst='0, 0, 5, 0', WinUI='0, 0, 10, 0'}" />
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="DefaultItemStyle" TargetType="telerik:NavigationViewItemView">
+            <Setter Property="MinimumHeightRequest" Value="40" />
+            <Setter Property="Command" Value="{Binding SelectControlCommand}" />
+        </Style>
+        <Style x:Key="ItemStyle_MacCatalyst" TargetType="telerik:NavigationViewItemView">
+            <Setter Property="MinimumHeightRequest" Value="40" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="telerik:NavigationViewItemView.BackgroundColor" Value="{AppThemeBinding Light=#EBECEC, Dark=#757676}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="telerik:NavigationViewItemView.BackgroundColor" Value="{AppThemeBinding Light=#DBDCDC, Dark=#686969}" />
+                                <Setter Property="telerik:NavigationViewItemView.TextColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="telerik:NavigationViewItemView.TextColor" Value="{AppThemeBinding Light=#61000000, Dark=#61FFFFFF}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="NavigatableItemStyle_MacCatalyst" TargetType="telerik:NavigationViewItemView" BasedOn="{StaticResource ItemStyle_MacCatalyst}">
+            <Setter Property="Command" Value="{Binding SelectControlCommand}" />
+        </Style>
+        <Style x:Key="ControlsMenuPaneStyle" TargetType="telerik:NavigationViewPane">
+            <Setter Property="VerticalScrollBarVisibility" Value="Never" />
+            <Setter Property="BorderThickness" Value="0, 0, 1, 0" />
+            <Setter Property="BorderColor"
+                    Value="{AppThemeBinding Light={OnPlatform Default=#DFDFDF, WinUI=#D9D9D9},
+                                            Dark={OnPlatform Default=#A2A2A7, WinUI=#404040}}" />
+        </Style>
+        <Style x:Key="AccentHeaderButtonStyle" TargetType="telerik:NavigationViewToggleButton">
+            <Setter Property="FontFamily" Value="TelerikControlsIcons" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Text" Value="&#xe039;" />
+            <Setter Property="TextColor" Value="{StaticResource AccentColor8}" />
+        </Style>
+        <Style x:Key="ControlsMenuHeaderStyle" TargetType="telerik:NavigationViewHeader">
+            <Setter Property="BorderThickness" Value="0, 0, 1, 0" />
+            <Setter Property="BorderColor"
+                    Value="{AppThemeBinding Light={OnPlatform Default=#DFDFDF, WinUI=#D9D9D9},
+                                            Dark={OnPlatform Default=#A2A2A7, WinUI=#404040}}" />
+            <Setter Property="HeaderButtonStyle" Value="{StaticResource AccentHeaderButtonStyle}" />
+        </Style>
+    </VisualElement.Resources>
+
+    <telerik:RadNavigationView ItemsSource="{Binding Controls}"
+                               ImageSourcePath="Icon"
+                               ImageSourceConverter="{StaticResource StringToFontImageSourceConverter}"
+                               ItemTemplate="{StaticResource ControlItemTemplate}"
+                               SelectedItem="{Binding SelectedControl}"
+                               ItemStyle="{OnPlatform Default={StaticResource DefaultItemStyle}, MacCatalyst={StaticResource NavigatableItemStyle_MacCatalyst}}"
+                               PaneStyle="{StaticResource ControlsMenuPaneStyle}"
+                               HeaderStyle="{StaticResource ControlsMenuHeaderStyle}"
+                               DisplayMode="Compact"
+                               AutoChangeDisplayMode="False"
+                               CompactPaneWidth="{OnPlatform MacCatalyst=54}">
+        <telerik:RadNavigationView.Items>
+            <telerik:NavigationViewItem Position="Header"
+                                        Text="Home"
+                                        ImageSource="{StaticResource HomeIcon}"
+                                        IsSelected="{Binding IsHomeSelected, Mode=TwoWay}"
+                                        Style="{OnPlatform MacCatalyst={StaticResource ItemStyle_MacCatalyst}}" />
+            <telerik:NavigationViewItem Position="Header"
+                                        Text="Search"
+                                        ImageSource="{StaticResource SearchIcon}"
+                                        IsSelected="{Binding IsSearchSelected, Mode=TwoWay}"
+                                        Style="{OnPlatform MacCatalyst={StaticResource ItemStyle_MacCatalyst}}" />
+            <telerik:NavigationViewItem Position="Footer"
+                                        Text="Settings"
+                                        ImageSource="{StaticResource SettingsIcon}"
+                                        IsSelected="{Binding IsSettingsSelected, Mode=TwoWay}"
+                                        Style="{OnPlatform MacCatalyst={StaticResource ItemStyle_MacCatalyst}}" />
+        </telerik:RadNavigationView.Items>
+        <Grid BackgroundColor="{AppThemeBinding Light={StaticResource DefaultBackgroundColor}, Dark={StaticResource DefaultBackgroundColorDark}}">
+            <HorizontalStackLayout VerticalOptions="Start">
+                <Image Source="homepagebackground.png"
+                       Aspect="Center" />
+                <Image Source="homepagebackground.png"
+                       Aspect="Center" />
+            </HorizontalStackLayout>
+            <Grid Padding="64, 32"
+                  Grid.Row="0"
+                  Grid.RowSpan="2">
+                <ContentView Content="{Binding SelectedControl, Converter={StaticResource ModelToViewConverter}}" />
+                <views:HomeViewDesktop IsVisible="{Binding IsHomeSelected}" />
+                <views:SearchViewDesktop IsVisible="{Binding IsSearchSelected}"
+                                         SelectedSearchResult="{Binding SelectedSearchResult}" />
+                <views:SettingsView IsVisible="{Binding IsSettingsSelected}" />
+            </Grid>
+        </Grid>
+    </telerik:RadNavigationView>
+
+</ContentPage>
